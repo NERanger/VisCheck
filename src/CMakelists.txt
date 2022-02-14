@@ -1,0 +1,3 @@
+add_library(vis_check STATIC VisCheck.cc)
+target_link_libraries(vis_check PUBLIC ${PCL_LIBRARIES} Eigen3::Eigen)
+target_include_directories(vis_check PUBLIC ${CMAKE_CURRENT_LIST_DIR})
