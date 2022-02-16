@@ -30,7 +30,7 @@ int main(int argc, char const *argv[]){
                          0,           0,           0,           1;
 
     visc::VisCheck checker;
-    checker.SetCamera(cam_intri, cam_pose);
+    checker.SetCamera(cam_intri, cam_pose, 1226, 370);
     checker.SetInputCloud(ptcloud_xyz);
     checker.SetK(25);
     checker.SetVisScoreThresh(0.98f);

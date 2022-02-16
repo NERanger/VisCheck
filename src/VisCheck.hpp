@@ -32,18 +32,21 @@ public:
     inline void SetVisScoreThresh(float thresh) { vis_score_thresh_ = thresh; }
 
     void SetInputCloud(const Pt3dCloud::ConstPtr cloud_ptr);
-    void SetCamera(const CamIntrinsics& intri, const RigidTransform6d& pose);
+    void SetCamera(const CamIntrinsics& intri, const RigidTransform6d& pose, unsigned int img_width, unsigned int img_height);
     void ComputeVisibility(PtIndices& visible_pts);
 private:
     float ComputeVisibilityScore(float d, float d_min, float d_max);
     float ComputeEuclideanDistToOrigin(const Pt3d& pt);
 
-    Pt2dCloud::Ptr ProjectToImageSpace(Pt3dCloud::ConstPtr cloud_3d);
+    void ProjectToImageSpace(Pt3dCloud::ConstPtr cloud_3d, Pt2dCloud::Ptr cloud_proj, std::vector<unsigned int>& indice);
 
     Pt3dCloud::ConstPtr cloud_3d_ptr_ = nullptr;
 
     RigidTransform6d cam_pose_; // Transform from pointcloud frame to camera frame
     CamIntrinsics cam_intri_;
+
+    unsigned int img_width_ = 0;
+    unsigned int img_height_ = 0;
 
     unsigned int k_ = 7; // Number of nearest neighbor for knn search
     float vis_score_thresh_ = 0.95f;
