@@ -23,7 +23,7 @@ int main(int argc, char const *argv[]){
     pcl::copyPointCloud(*ptcloud, *ptcloud_xyz);
 
     visc::CamIntrinsics cam_intri{707.091, 707.091, 601.887, 183.11};
-    visc::RigidTransform6d cam_pose;
+    visc::RigidTransform6d cam_pose;  // For trnsform ptcloud points into camera frame
     cam_pose.matrix() << -0.00185776,   -0.999966, -0.00804016, -0.00478403,
                          -0.00648159,  0.00805223,   -0.999946,  -0.0733743,
                          0.999977, -0.00180569, -0.00649607,   -0.333997,
