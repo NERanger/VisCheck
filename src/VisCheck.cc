@@ -39,7 +39,7 @@ void VisCheck::ComputeVisibility(PtIndices& visible_pts){
         // Reference: https://pcl.readthedocs.io/projects/tutorials/en/latest/kdtree_search.html#kdtree-search
         std::vector<int> pt_idx(k_);
         std::vector<float> pt_squared_dis(k_);
-        if(!kdtree.nearestKSearch(pt_search, k_, pt_idx, pt_squared_dis) > 0){
+        if(!(kdtree.nearestKSearch(pt_search, k_, pt_idx, pt_squared_dis) > 0)){
             continue;
         }
 
@@ -55,10 +55,10 @@ void VisCheck::ComputeVisibility(PtIndices& visible_pts){
         pt_depth.push_back(pt_search_depth);
 
         // Find max and min depth
-        auto max_it = std::max_element(std::begin(pt_depth), std::end(pt_depth));
-        auto min_it = std::min_element(std::begin(pt_depth), std::end(pt_depth));
-        float max_depth = *max_it;
-        float min_depth = *min_it;
+        float max_depth, min_depth;
+        const auto minmax_res = std::minmax_element(std::begin(pt_depth), std::end(pt_depth));
+        min_depth = *minmax_res.first;
+        max_depth = *minmax_res.second;
 
         float vis_score = ComputeVisibilityScore(pt_search_depth, min_depth, max_depth);
 
@@ -83,6 +83,7 @@ Pt2dCloud::Ptr VisCheck::ProjectToImageSpace(Pt3dCloud::ConstPtr cloud_3d){
     out->reserve(cloud_3d->size());
     for(const Pt3d& pt : cloud_3d->points){
         Pt2d proj;
+
         proj.x = cam_intri_.fx * pt.x / pt.z + cam_intri_.cx;
         proj.y = cam_intri_.fy * pt.y / pt.z + cam_intri_.cy;
 

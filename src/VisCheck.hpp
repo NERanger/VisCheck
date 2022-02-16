@@ -29,6 +29,7 @@ public:
     VisCheck() = default;
 
     inline void SetK(unsigned int k) { k_ = k; } // Set number of nearest neighbor for knn search
+    inline void SetVisScoreThresh(float thresh) { vis_score_thresh_ = thresh; }
 
     void SetInputCloud(const Pt3dCloud::ConstPtr cloud_ptr);
     void SetCamera(const CamIntrinsics& intri, const RigidTransform6d& pose);

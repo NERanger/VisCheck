@@ -6,7 +6,7 @@ if(NOT CMAKE_BUILD_TYPE)
   add_definitions(-DNDEBUG)
 endif()
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   # using GCC
@@ -30,3 +30,4 @@ link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
 
 add_subdirectory(src)
+add_subdirectory(sample)

@@ -1,0 +1,2 @@
+add_executable(visiblity_estimation visiblity_estimation.cc)
+target_link_libraries(visiblity_estimation PUBLIC vis_check)
