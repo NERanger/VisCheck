@@ -33,12 +33,13 @@ int main(int argc, char const *argv[]){
     checker.SetCamera(cam_intri, cam_pose, 1226, 370);
     checker.SetInputCloud(ptcloud_xyz);
     checker.SetK(25);
-    checker.SetVisScoreThresh(0.98f);
+    checker.SetVisScoreThreshMeanShift(0.1f);
 
     visc::PtIndices result;
     checker.ComputeVisibility(result);
 
     cout << "visible point num: " << result.indices.size() << endl;
+    cout << "Mean visibility score: " << checker.GetMeanVisScore() << endl;
 
     pcl::PointCloud<pcl::PointXYZRGB>::Ptr vis_cloud(new pcl::PointCloud<pcl::PointXYZRGB>);
     pcl::copyPointCloud(*ptcloud_xyz, *vis_cloud);

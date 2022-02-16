@@ -30,6 +30,9 @@ public:
 
     inline void SetK(unsigned int k) { k_ = k; } // Set number of nearest neighbor for knn search
     inline void SetVisScoreThresh(float thresh) { vis_score_thresh_ = thresh; }
+    inline void SetVisScoreThreshMeanShift(float shift) {mean_shift_ = shift; }
+
+    inline float GetMeanVisScore() const {return mean_vis_score_;}
 
     void SetInputCloud(const Pt3dCloud::ConstPtr cloud_ptr);
     void SetCamera(const CamIntrinsics& intri, const RigidTransform6d& pose, unsigned int img_width, unsigned int img_height);
@@ -50,6 +53,8 @@ private:
 
     unsigned int k_ = 7; // Number of nearest neighbor for knn search
     float vis_score_thresh_ = 0.95f;
+    float mean_shift_ = 0.0f;
+    float mean_vis_score_ = 0.0f;
 };
 
 }

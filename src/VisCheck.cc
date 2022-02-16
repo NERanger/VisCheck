@@ -1,3 +1,5 @@
+#include <numeric>
+
 #include <pcl/common/transforms.h>
 #include <pcl/common/geometry.h>
 #include <pcl/kdtree/kdtree_flann.h>
@@ -35,6 +37,10 @@ void VisCheck::ComputeVisibility(PtIndices& visible_pts){
     pcl::KdTreeFLANN<pcl::PointXY> kdtree;
     kdtree.setInputCloud(proj_pts);
 
+    // vector for storing scores (init with 0.0)
+    std::vector<float> vis_scores(proj_pts->size());
+    std::fill(vis_scores.begin(), vis_scores.end(), 0.0);
+
     for(size_t i = 0; i < proj_pts->size(); ++i){
         const Pt2d& pt_search = proj_pts->at(i);
 
@@ -65,8 +71,15 @@ void VisCheck::ComputeVisibility(PtIndices& visible_pts){
 
         float vis_score = ComputeVisibilityScore(pt_search_depth, min_depth, max_depth);
 
-        if(vis_score < vis_score_thresh_){continue;}
+        // if(vis_score < vis_score_thresh_){continue;}
+        vis_scores[i] = vis_score;
+        // visible_pts.indices.push_back(proj_indices[i]);
+    }
 
+    mean_vis_score_ = std::reduce(vis_scores.begin(), vis_scores.end()) / vis_scores.size();
+
+    for(size_t i = 0; i < proj_pts->size(); ++i){
+        if(vis_scores[i] < mean_vis_score_ + mean_shift_) { continue; }
         visible_pts.indices.push_back(proj_indices[i]);
     }
 }
