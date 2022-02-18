@@ -32,8 +32,8 @@ int main(int argc, char const *argv[]){
     visc::VisCheck checker;
     checker.SetCamera(cam_intri, cam_pose, 1226, 370);
     checker.SetInputCloud(ptcloud_xyz);
-    checker.SetK(50);
-    checker.SetVisScoreThreshMeanShift(0.0f);
+    checker.SetK(75);
+    checker.SetVisScoreThreshMeanShift(0.05f);
 
     visc::PtIndices result;
     checker.ComputeVisibility(result);
