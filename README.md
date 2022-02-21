@@ -18,7 +18,7 @@ Check for the [sample program](./sample/visiblity_estimation.cc)
 
 The hard-coded camera params can be used with the pointcloud in `data/`
 
-```cpp
+```c++
 visc::CamIntrinsics cam_intri{707.091, 707.091, 601.887, 183.11};
 visc::RigidTransform6d cam_pose; // For trnsform ptcloud points into camera frame
 cam_pose.matrix() << -0.00185776,   -0.999966, -0.00804016, -0.00478403,
